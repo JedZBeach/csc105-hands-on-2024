@@ -3,6 +3,13 @@ import type { CreateTodoInput, UpdateTodoInput } from '../types/index.ts';
 
 export async function validateIdParam(c: Context, next: Next) {
 	// IMPLEMENT HERE
+	const id = parseInt(c.req.param('id'));
+	
+	if (isNaN(id) || id <= 0) {
+		return c.json({ error: 'Invalid ID parameter. ID must be a positive number.' }, 400);
+	}
+	
+	await next()
 }
 
 export async function validateCreateTodo(c: Context, next: Next) {
